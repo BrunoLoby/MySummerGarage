@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org"
+  layout:decorate="~{layout/layoutpadrao}">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+  <title>Alterar Pessoa</title>
+</head>
+
+<body>
+  <!-- conteudo principal -->
+  <main layout:fragment="conteudo" th:fragment="formulario" id="main" class="flex flex-col align-middle w-full m-10">
+
+    <h1 th:if="${pessoaDTOInput == null}" class="text-2xl md:text-4xl text-center">Não foi encontrada pessoa com esse código
+    </h1>
+
+    <form th:if="${pessoaDTOInput != null}" th:hx-post="@{/pessoa/alterar}" th:object="${pessoaDTOInput}" class="w-1/2 mt-10 ms-16">
+      <div th:replace="~{components/forms :: inputTexto(
+        textoLabel='Código', 
+        nomeAtributo='codigo',
+        isValidado=true,
+        isDisabled=true)}"></div>
+           
+      <div th:replace="~{components/forms :: inputTexto(
+        textoLabel='Nome', 
+        nomeAtributo='nome',
+        isValidado=true)}"></div>
+      <div class="flex">
+        <div class="flex-1 mr-10">
+          <div th:replace="~{components/forms :: inputCpf(
+            textoLabel='CPF', 
+            nomeAtributo='cpf',
+            isValidado=true)}"></div>
+        </div>
+        <div class="flex-1">
+          <div th:replace="~{components/forms :: inputData(
+            textoLabel='Nascimento', 
+            nomeAtributo='dataNascimento',
+            isValidado=true)}"></div>
+        </div>
+      </div>
+      <button type="submit"
+        class="mt-7 py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none">Alterar</button>
+    </form>
+
+  </main>
+  <!-- !conteudo principal -->
+
+</body>
+
+</html>

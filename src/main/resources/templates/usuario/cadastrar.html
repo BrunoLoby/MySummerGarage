@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR" layout:decorate="~{layout/layoutpadrao}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+  <title>Cadastro de Usuário</title>
+</head>
+
+<body>
+  <!-- conteudo principal -->
+  <main layout:fragment="conteudo" th:fragment="formulario" id="main" class="flex flex-col align-middle w-full m-10">
+
+        <form th:hx-post="@{/usuario/cadastrar}" th:object="${usuarioDTOInput}" class="w-1/2 mt-10 ms-16">
+
+          <div th:replace="~{components/forms :: inputTexto(
+            textoLabel='Nome', 
+            nomeAtributo='nome',
+            isValidado=true)}"></div>
+
+          <div th:replace="~{components/forms :: inputEmail(
+            textoLabel='E-mail', 
+            nomeAtributo='email',
+            isValidado=true)}"></div>
+
+          <div class="flex justify-between">
+            <div class="w-1/2 me-5">
+              <div th:replace="~{components/forms :: inputTexto(
+                textoLabel='Nome de usuário', 
+                nomeAtributo='nomeUsuario',
+                isValidado=true)}"></div>        
+            </div>
+            <div class="w-1/2">
+              <div th:replace="~{components/forms :: inputSenha(
+                textoLabel='Senha', 
+                nomeAtributo='senha',
+                isValidado=true)}"></div>
+            </div>
+          </div>        
+
+          <div class="flex justify-between">
+            <div class="w-1/2 me-5">
+              <div th:replace="~{components/forms :: inputData(
+                textoLabel='Data de Nascimento', 
+                nomeAtributo='dataNascimento',
+                isValidado=true)}"></div>            
+            </div>
+            <div class="w-1/2">
+              <div th:replace="~{components/forms :: checkboxMultiplo(
+                textoLabelGroup='Papéis', 
+                nomeAtributo='papeis',
+                listaOpcoes=${todosPapeis}, 
+                propLabel='nome',
+                propValue='codigo', 
+                isValidado=true)}"></div>
+            </div>
+          </div>
+          <button type="submit" class="py-3 px-4 inline-flex items-center mt-5 gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none">Cadastrar</button>
+        </form>
+  </main>
+  <!-- !conteudo principal -->
+
+</body>
+
+</html>

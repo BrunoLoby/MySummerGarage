@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR" layout:decorate="~{layout/layoutpadrao}" xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+  <title>Cadastrar Aplicação</title>
+</head>
+
+<body>
+  <!-- conteudo principal -->
+  <main layout:fragment="conteudo" th:fragment="formulario" id="main" class="flex flex-col align-middle w-full m-10">
+
+    <h1 class="ms-16 text-xl md:text-2xl">Cadastro de Aplicação</h1>
+
+    <form th:hx-post="@{/aplicacao/cadastrar}" th:object="${aplicacaoDTOInput}" class="w-2/3 mt-5 ms-16">
+
+      <div th:replace="~{components/forms :: inputData(
+        textoLabel='Data da Aplicação', 
+        nomeAtributo='data',
+        isValidado=true)}"></div>
+
+      <div class="flex">
+        <div class="flex-1 mr-10">
+          <div th:replace="~{components/forms :: inputBuscavelValidado(
+                textoLabel='Pessoa',
+                nomeAtributo='pessoa',
+                valorAtributo=${aplicacaoDTOInput.pessoa != null ? aplicacaoDTOInput.pessoa.codigo : -1},
+                textoAtributo=${aplicacaoDTOInput.pessoa != null ? aplicacaoDTOInput.pessoa.nome : 'Selecione uma opção'},
+                placeholderBusca='Buscar pessoa pelo CPF...',
+                urlBusca='/aplicacao/pesquisarpessoa')}"></div>
+        </div>
+        <div class="flex-1">
+          <div th:replace="~{components/forms :: inputBuscavelValidado(
+                textoLabel='Lote',
+                nomeAtributo='lote',
+                valorAtributo=${aplicacaoDTOInput.lote != null ? aplicacaoDTOInput.lote.codigo : -1},
+                textoAtributo=${aplicacaoDTOInput.lote != null ? aplicacaoDTOInput.lote.vacina.nome + ' - ' + aplicacaoDTOInput.lote.validade : 'Selecione uma opção'},
+                placeholderBusca='Buscar lote pelo nome da vacina...',
+                urlBusca='/aplicacao/pesquisarlote')}"></div>
+        </div>
+      </div>
+
+      <button type="submit"
+        class="mt-8 py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 focus:outline-none focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none">Cadastrar</button>
+    </form>
+
+  </main>
+  <!-- !conteudo principal -->
+</body>
+
+</html>
