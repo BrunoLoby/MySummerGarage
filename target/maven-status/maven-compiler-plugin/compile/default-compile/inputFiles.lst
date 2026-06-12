@@ -5,6 +5,7 @@
 /home/trabalho/MySummerGarage/src/main/java/web/MySummerGarage/controller/VendaController.java
 /home/trabalho/MySummerGarage/src/main/java/web/MySummerGarage/controller/carroAnuncioController.java
 /home/trabalho/MySummerGarage/src/main/java/web/MySummerGarage/filter/CarroFilter.java
+/home/trabalho/MySummerGarage/src/main/java/web/MySummerGarage/model/Perfil.java
 /home/trabalho/MySummerGarage/src/main/java/web/MySummerGarage/model/Usuario.java
 /home/trabalho/MySummerGarage/src/main/java/web/MySummerGarage/model/Venda.java
 /home/trabalho/MySummerGarage/src/main/java/web/MySummerGarage/model/carroAnuncio.java

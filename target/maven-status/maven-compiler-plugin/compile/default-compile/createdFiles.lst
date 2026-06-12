@@ -1,0 +1,11 @@
+web/MySummerGarage/filter/CarroFilter.class
+web/MySummerGarage/model/Venda.class
+web/MySummerGarage/controller/VendaController.class
+web/MySummerGarage/controller/PagamentoController.class
+web/MySummerGarage/MySummerGarageApplication.class
+web/MySummerGarage/model/Usuario.class
+web/MySummerGarage/controller/carroAnuncioController.class
+web/MySummerGarage/controller/RelatoriosController.class
+web/MySummerGarage/model/carroAnuncio.class
+web/MySummerGarage/controller/UsuarioController.class
+web/MySummerGarage/model/Perfil.class
