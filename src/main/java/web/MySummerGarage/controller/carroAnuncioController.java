@@ -1,4 +1,6 @@
-package main.java.web.MySummerGarage.controller;
+package web.MySummerGarage.controller;
+
+import web.MySummerGarage.model.carroAnuncio;
 
 public class carroAnuncioController {
 

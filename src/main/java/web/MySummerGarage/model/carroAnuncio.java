@@ -1,4 +1,5 @@
-package main.java.web.MySummerGarage.model;
+package web.MySummerGarage.model;
+
 
 public class carroAnuncio{
     private String marca;

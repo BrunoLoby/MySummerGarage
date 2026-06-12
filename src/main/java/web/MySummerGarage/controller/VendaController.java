@@ -1,4 +1,4 @@
-package main.java.web.MySummerGarage.controller;
+package web.MySummerGarage.controller;
 
 public class VendaController {
 
