@@ -1,4 +1,4 @@
-package web.MySummerGarage.controller;
+package     
 
 public class PagamentoController {
 
