@@ -71,7 +71,7 @@
   </div>
 
   <!-- 5o Item Menu -->
-  <div x-data="{ open: false }" sec:authorize="hasRole('ROLE_ADMIN')">
+  <div x-data="{ open: false }" sec:authorize="hasRole('ADMIN')">
     <button
       th:replace="~{components/menu-item-button :: menu-item-button('Relatórios', ~{::#relatorios-icon})}"></button>
 
@@ -134,7 +134,7 @@
 
 
   <!-- TESTE -->
-  <div x-data="{ open: false }" sec:authorize="hasRole('ROLE_ADMIN')">
+  <div x-data="{ open: false }" sec:authorize="hasRole('ADMIN')">
     <button @click="open = !open"
       class="flex w-48 cursor-pointer items-center justify-between py-3 text-gray-400 hover:text-white focus:outline-none">
       <span class="flex items-center">
