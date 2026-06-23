@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      layout:decorate="~{layout/layoutpadrao}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Visualizar Anúncio</title>
+</head>
+<body>
+<main layout:fragment="conteudo" th:fragment="conteudo" id="main"
+      class="flex flex-col w-full m-10">
+
+  <div class="max-w-3xl">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-semibold text-gray-700" th:text="${anuncio.titulo}"></h2>
+      <span th:text="${anuncio.status}"
+            th:classappend="${anuncio.status.name() == 'ATIVO'} ? 'bg-green-100 text-green-800' :
+                            (${anuncio.status.name() == 'VENDIDO'} ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-600')"
+            class="px-3 py-1 rounded-full text-sm font-medium"></span>
+    </div>
+
+    <div class="bg-white border border-gray-200 rounded-xl p-6 space-y-4">
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <p class="text-xs text-gray-400 uppercase font-medium">Marca</p>
+          <p class="text-gray-800 mt-1" th:text="${anuncio.marca}"></p>
+        </div>
+        <div>
+          <p class="text-xs text-gray-400 uppercase font-medium">Modelo</p>
+          <p class="text-gray-800 mt-1" th:text="${anuncio.modelo}"></p>
+        </div>
+        <div>
+          <p class="text-xs text-gray-400 uppercase font-medium">Ano</p>
+          <p class="text-gray-800 mt-1" th:text="${anuncio.ano}"></p>
+        </div>
+        <div>
+          <p class="text-xs text-gray-400 uppercase font-medium">Cor</p>
+          <p class="text-gray-800 mt-1" th:text="${anuncio.cor ?: '-'}"></p>
+        </div>
+        <div>
+          <p class="text-xs text-gray-400 uppercase font-medium">Valor</p>
+          <p class="text-gray-800 mt-1 font-semibold"
+             th:text="'R$ ' + ${#numbers.formatDecimal(anuncio.valor, 1, 'POINT', 2, 'COMMA')}"></p>
+        </div>
+        <div>
+          <p class="text-xs text-gray-400 uppercase font-medium">Quilometragem</p>
+          <p class="text-gray-800 mt-1"
+             th:text="${anuncio.quilometragem != null ? #numbers.formatInteger(anuncio.quilometragem, 1, 'POINT') + ' km' : '-'}"></p>
+        </div>
+        <div>
+          <p class="text-xs text-gray-400 uppercase font-medium">Data de Publicação</p>
+          <p class="text-gray-800 mt-1"
+             th:text="${anuncio.dataPublicacao != null ? #temporals.format(anuncio.dataPublicacao, 'dd/MM/yyyy') : '-'}"></p>
+        </div>
+        <div>
+          <p class="text-xs text-gray-400 uppercase font-medium">Vendedor</p>
+          <p class="text-gray-800 mt-1"
+             th:text="${anuncio.vendedor != null ? anuncio.vendedor.nome : '-'}"></p>
+        </div>
+      </div>
+
+      <div th:if="${anuncio.descricao}">
+        <p class="text-xs text-gray-400 uppercase font-medium mt-2">Descrição</p>
+        <p class="text-gray-700 mt-1 whitespace-pre-wrap" th:text="${anuncio.descricao}"></p>
+      </div>
+    </div>
+
+    <div class="flex gap-4 mt-6">
+      <a th:hx-get="@{/anuncio/alterar/{c}(c=${anuncio.codigo})}"
+         hx-target="#main" hx-swap="outerHTML" hx-push-url="true"
+         class="cursor-pointer py-3 px-6 text-sm font-medium rounded-lg bg-blue-100 text-blue-800 hover:bg-blue-200">
+        Alterar
+      </a>
+      <a th:hx-get="@{/anuncio/pesquisar}" hx-target="#main" hx-swap="outerHTML" hx-push-url="true"
+         class="cursor-pointer py-3 px-6 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-100">
+        Voltar
+      </a>
+    </div>
+  </div>
+</main>
+</body>
+</html>

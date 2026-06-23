@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      layout:decorate="~{layout/layoutpadrao}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Pesquisar Anúncios</title>
+</head>
+<body>
+<main layout:fragment="conteudo" th:fragment="conteudo" id="main"
+      class="flex flex-col w-full m-10">
+
+  <h2 class="text-2xl font-semibold text-gray-700 mb-6">Anúncios de Carros</h2>
+
+  <div th:if="${mensagemSucesso}"
+       class="mb-4 p-4 bg-green-100 text-green-800 rounded-lg" th:text="${mensagemSucesso}"></div>
+
+  <div th:if="${mensagemErro}"
+       class="mb-4 p-4 bg-red-100 text-red-800 rounded-lg" th:text="${mensagemErro}"></div>
+
+  <!-- Filtros -->
+  <form th:hx-get="@{/anuncio/pesquisar}" hx-target="#main" hx-swap="outerHTML" hx-push-url="true"
+        class="flex flex-wrap gap-4 mb-6 items-end">
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Título</label>
+      <input type="text" name="titulo" th:value="${filtro.titulo}"
+             class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-gray-500"
+             placeholder="Buscar por título..."/>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Marca</label>
+      <input type="text" name="marca" th:value="${filtro.marca}"
+             class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-gray-500"
+             placeholder="Filtrar por marca..."/>
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+      <select name="status"
+              class="px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-500 focus:outline-none focus:border-gray-500">
+        <option value="">Todos</option>
+        <option th:each="s : ${todosStatus}" th:value="${s}" th:text="${s}"
+                th:selected="${filtro.status == s}"></option>
+      </select>
+    </div>
+    <button type="submit"
+            class="py-2 px-4 text-sm font-medium rounded-lg bg-blue-100 text-blue-800 hover:bg-blue-200">
+      Filtrar
+    </button>
+    <a th:hx-get="@{/anuncio/cadastrar}" hx-target="#main" hx-swap="outerHTML" hx-push-url="true"
+       class="cursor-pointer py-2 px-4 text-sm font-medium rounded-lg bg-green-100 text-green-800 hover:bg-green-200">
+      + Novo Anúncio
+    </a>
+  </form>
+
+  <!-- Tabela -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
+      <thead class="bg-gray-50">
+        <tr>
+          <th th:replace="~{components/paginacao :: coluna(${pagina}, 'titulo', 'Título', '')}"></th>
+          <th th:replace="~{components/paginacao :: coluna(${pagina}, 'marca', 'Marca', '')}"></th>
+          <th th:replace="~{components/paginacao :: coluna(${pagina}, 'modelo', 'Modelo', '')}"></th>
+          <th th:replace="~{components/paginacao :: coluna(${pagina}, 'ano', 'Ano', '')}"></th>
+          <th th:replace="~{components/paginacao :: coluna(${pagina}, 'valor', 'Valor', '')}"></th>
+          <th th:replace="~{components/paginacao :: coluna(${pagina}, 'status', 'Status', '')}"></th>
+          <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Ações</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <tr th:if="${#lists.isEmpty(anuncios)}">
+          <td colspan="7" class="px-6 py-10 text-center text-gray-400">Nenhum anúncio encontrado.</td>
+        </tr>
+        <tr th:each="a : ${anuncios}" class="hover:bg-gray-50">
+          <td class="px-6 py-4 text-sm text-gray-800" th:text="${a.titulo}"></td>
+          <td class="px-6 py-4 text-sm text-gray-600" th:text="${a.marca}"></td>
+          <td class="px-6 py-4 text-sm text-gray-600" th:text="${a.modelo}"></td>
+          <td class="px-6 py-4 text-sm text-gray-600" th:text="${a.ano}"></td>
+          <td class="px-6 py-4 text-sm text-gray-600"
+              th:text="'R$ ' + ${#numbers.formatDecimal(a.valor, 1, 'POINT', 2, 'COMMA')}"></td>
+          <td class="px-6 py-4 text-sm">
+            <span th:text="${a.status}"
+                  th:classappend="${a.status.name() == 'ATIVO'} ? 'bg-green-100 text-green-800' :
+                                  (${a.status.name() == 'VENDIDO'} ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-600')"
+                  class="px-2 py-1 rounded-full text-xs font-medium"></span>
+          </td>
+          <td class="px-6 py-4 text-sm">
+            <div class="flex gap-3">
+              <!-- Visualizar -->
+              <a th:hx-get="@{/anuncio/visualizar/{c}(c=${a.codigo})}"
+                 hx-target="#main" hx-swap="outerHTML" hx-push-url="true"
+                 class="cursor-pointer text-gray-600 hover:text-gray-900" title="Visualizar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
+                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
+                </svg>
+              </a>
+              <!-- Alterar -->
+              <a th:hx-get="@{/anuncio/alterar/{c}(c=${a.codigo})}"
+                 hx-target="#main" hx-swap="outerHTML" hx-push-url="true"
+                 class="cursor-pointer text-blue-600 hover:text-blue-900" title="Alterar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                </svg>
+              </a>
+              <!-- Excluir -->
+              <form th:action="@{/anuncio/excluir/{c}(c=${a.codigo})}" method="post"
+                    onsubmit="return confirm('Confirma a exclusão deste anúncio?')">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <button type="submit" class="cursor-pointer text-red-500 hover:text-red-800" title="Excluir">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                  </svg>
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Paginação -->
+  <div th:replace="~{components/paginacao :: paginacao(${pagina})}"></div>
+
+</main>
+</body>
+</html>
