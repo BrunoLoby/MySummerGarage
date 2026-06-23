@@ -19,11 +19,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                // Recursos estáticos e página de login liberados
-                .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**",
-                                 "/favicon.ico").permitAll()
+                // Recursos estáticos e login liberados
+                .requestMatchers("/css/**", "/js/**", "/images/**",
+                                 "/webjars/**", "/favicon.ico").permitAll()
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/actuator/health").permitAll()
+                // Apenas ADMIN acessa usuários e relatórios
+                .requestMatchers("/usuario/**").hasRole("ADMIN")
+                .requestMatchers("/relatorios/**").hasRole("ADMIN")
                 // Qualquer outra requisição exige autenticação
                 .anyRequest().authenticated()
             )
@@ -40,6 +43,9 @@ public class SecurityConfig {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
                 .permitAll()
+            )
+            .exceptionHandling(ex -> ex
+                .accessDeniedPage("/403")
             );
 
         return http.build();
