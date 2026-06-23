@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      layout:decorate="~{layout/layoutpadrao}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Cadastrar Anúncio</title>
+</head>
+<body>
+<main layout:fragment="conteudo" th:fragment="conteudo" id="main"
+      class="flex flex-col w-full m-10">
+
+  <h2 class="text-2xl font-semibold text-gray-700 mb-6">Novo Anúncio de Carro</h2>
+
+  <form th:hx-post="@{/anuncio/cadastrar}"
+        th:object="${anuncioDTOInput}" class="w-full max-w-3xl">
+
+    <div th:replace="~{components/forms :: inputTexto(
+        textoLabel='Título do anúncio',
+        nomeAtributo='titulo',
+        isValidado=true)}"></div>
+
+    <div class="flex gap-6">
+      <div class="w-1/2">
+        <div th:replace="~{components/forms :: inputTexto(
+            textoLabel='Marca',
+            nomeAtributo='marca',
+            isValidado=true)}"></div>
+      </div>
+      <div class="w-1/2">
+        <div th:replace="~{components/forms :: inputTexto(
+            textoLabel='Modelo',
+            nomeAtributo='modelo',
+            isValidado=true)}"></div>
+      </div>
+    </div>
+
+    <div class="flex gap-6">
+      <div class="w-1/2">
+        <div th:replace="~{components/forms :: inputNumero(
+            textoLabel='Ano',
+            nomeAtributo='ano',
+            isValidado=true,
+            isDecimal=false,
+            showGroups=false)}"></div>
+      </div>
+      <div class="w-1/2">
+        <div th:replace="~{components/forms :: inputTexto(
+            textoLabel='Cor',
+            nomeAtributo='cor',
+            isValidado=true)}"></div>
+      </div>
+    </div>
+
+    <div class="flex gap-6">
+      <div class="w-1/2">
+        <div th:replace="~{components/forms :: inputDinheiro(
+            textoLabel='Valor (R$)',
+            nomeAtributo='valor',
+            isValidado=true)}"></div>
+      </div>
+      <div class="w-1/2">
+        <div th:replace="~{components/forms :: inputNumero(
+            textoLabel='Quilometragem (km)',
+            nomeAtributo='quilometragem',
+            isValidado=true,
+            isDecimal=false,
+            showGroups=true)}"></div>
+      </div>
+    </div>
+
+    <div class="w-1/2">
+      <div th:replace="~{components/forms :: inputData(
+          textoLabel='Data de Publicação',
+          nomeAtributo='dataPublicacao',
+          isValidado=true)}"></div>
+    </div>
+
+    <div th:replace="~{components/forms :: inputTextArea(
+        textoLabel='Descrição',
+        nomeAtributo='descricao',
+        isValidado=true,
+        nroLinhas=4)}"></div>
+
+    <div class="flex gap-4 mt-8">
+      <button type="submit"
+              class="py-3 px-6 text-sm font-medium rounded-lg border border-transparent bg-green-100 text-green-800 hover:bg-green-200 focus:outline-none focus:bg-green-200">
+        Cadastrar
+      </button>
+      <a th:hx-get="@{/anuncio/pesquisar}" hx-target="#main" hx-swap="outerHTML" hx-push-url="true"
+         class="cursor-pointer py-3 px-6 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-100">
+        Cancelar
+      </a>
+    </div>
+  </form>
+</main>
+</body>
+</html>
