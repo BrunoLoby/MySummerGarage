@@ -35,30 +35,73 @@ public class Usuario implements Serializable {
     private boolean ativo;
 
     @ManyToMany
-    @JoinTable(
-        name = "usuario_perfil",
-        joinColumns = @JoinColumn(name = "codigo_usuario"),
-        inverseJoinColumns = @JoinColumn(name = "codigo_perfil")
-    )
+    @JoinTable(name = "usuario_perfil", joinColumns = @JoinColumn(name = "codigo_usuario"), inverseJoinColumns = @JoinColumn(name = "codigo_perfil"))
     private List<Perfil> perfis = new ArrayList<>();
 
-    public Long getCodigo() { return codigo; }
-    public void setCodigo(Long codigo) { this.codigo = codigo; }
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-    public String getSenha() { return senha; }
-    public void setSenha(String senha) { this.senha = senha; }
-    public String getNomeUsuario() { return nomeUsuario; }
-    public void setNomeUsuario(String nomeUsuario) { this.nomeUsuario = nomeUsuario; }
-    public boolean isAtivo() { return ativo; }
-    public void setAtivo(boolean ativo) { this.ativo = ativo; }
-    public List<Perfil> getPerfis() { return perfis; }
-    public void setPerfis(List<Perfil> perfis) { this.perfis = perfis; }
+    // GETTERS E SETTERS
+    public Long getCodigo() {
+        return codigo;
+    }
 
-    public void adicionarPerfil(Perfil perfil) { perfis.add(perfil); }
-    public void removerPerfil(Perfil perfil) { perfis.remove(perfil); }
+    public void setCodigo(Long codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getNomeUsuario() {
+        return nomeUsuario;
+    }
+
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public List<Perfil> getPerfis() {
+        return perfis;
+    }
+
+    public void setPerfis(List<Perfil> perfis) {
+        this.perfis = perfis;
+    }
+
+    public void adicionarPerfil(Perfil perfil) {
+        perfis.add(perfil);
+    }
+
+    public void removerPerfil(Perfil perfil) {
+        perfis.remove(perfil);
+    }
 
     @Override
     public int hashCode() {
@@ -70,13 +113,18 @@ public class Usuario implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
         Usuario other = (Usuario) obj;
         if (codigo == null) {
-            if (other.codigo != null) return false;
-        } else if (!codigo.equals(other.codigo)) return false;
+            if (other.codigo != null)
+                return false;
+        } else if (!codigo.equals(other.codigo))
+            return false;
         return true;
     }
 
@@ -85,4 +133,4 @@ public class Usuario implements Serializable {
         return "Usuario [codigo=" + codigo + ", nome=" + nome + ", email=" + email
                 + ", nomeUsuario=" + nomeUsuario + ", ativo=" + ativo + "]";
     }
-}   
+}

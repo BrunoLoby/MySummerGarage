@@ -1,6 +1,6 @@
 package web.MySummerGarage.model;
 
-//imports
+//IMPORTS
 
 import java.io.Serializable;
 import jakarta.persistence.Entity;

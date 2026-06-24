@@ -16,7 +16,7 @@
       class="flex flex-col w-full p-6 md:p-10"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <!-- Cabeçalho da vitrine -->
+   
     <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8">
       <div>
         <h1 class="text-3xl md:text-4xl font-bold text-gray-700">Carros anunciados</h1>
@@ -24,13 +24,12 @@
       </div>
 
       <div class="flex gap-3">
-        <!-- Botão de login (somente para quem não está logado) -->
+        
         <a sec:authorize="!isAuthenticated()" href="/login"
-           class="py-3 px-6 text-sm font-medium rounded-lg bg-gray-700 text-white hover:bg-gray-800">
+           class="py-3 px-6 text-sm font-medium rounded-lg bg-tema-laranja text-black hover:bg-tema-laranja-hover">
           Entrar
         </a>
 
-        <!-- Anunciar carro: logado vai ao cadastro; deslogado vai ao login -->
         <a sec:authorize="isAuthenticated()" th:hx-get="@{/anuncio/cadastrar}"
            hx-target="#main" hx-swap="outerHTML" hx-push-url="true"
            class="cursor-pointer py-3 px-6 text-sm font-medium rounded-lg bg-green-100 text-green-800 hover:bg-green-200">
@@ -43,12 +42,10 @@
       </div>
     </div>
 
-    <!-- Estado vazio -->
     <div th:if="${#lists.isEmpty(anuncios)}" class="text-center text-gray-400 py-20">
       Nenhum carro anunciado no momento.
     </div>
 
-    <!-- Grade de cards (somente leitura) -->
     <div th:unless="${#lists.isEmpty(anuncios)}"
          class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <a th:each="a : ${anuncios}"

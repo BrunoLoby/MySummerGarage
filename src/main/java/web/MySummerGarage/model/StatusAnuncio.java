@@ -1,5 +1,6 @@
 package web.MySummerGarage.model;
 
+//CLASSE ENUM PARA DEFINIR O STATUS DE UM ANUNCIO DE CARRO, SEJA ATIVO, VENDIDO OU INATIVO
 public enum StatusAnuncio {
     ATIVO, VENDIDO, INATIVO
 }

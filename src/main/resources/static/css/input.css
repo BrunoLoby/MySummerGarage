@@ -81,7 +81,14 @@
   color: white;
 }
 
+.bg-tema-vermelho {
+  background-color: #ff4000 !important;
+}
 
 .bg-tema-azul {
   background-color: #050517;
+}
+
+.bg-tema-laranja{
+  background-color: #CF5C36;
 }

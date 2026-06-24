@@ -45,7 +45,7 @@
       
       <!-- nome do usuario -->
       <div sec:authorize="isAuthenticated()">
-        <div class="text-sm text-gray-300 md:text-xl">
+        <div class="text-sm text-white font-bold md:text-xl">
           <span sec:authentication="principal.username"></span>
         </div>
       </div>
@@ -59,7 +59,8 @@
           />
           <button
             type="submit"
-            class="ml-5 rounded-lg border-2 border-gray-600 bg-gray-600 px-8 py-2 text-white shadow-md hover:bg-white hover:text-gray-600"
+            
+            class="ml-5 rounded-lg border-5 border-gray-600 bg-gray-600 px-4 py-2 text-white shadow-md hover:bg-white hover:text-gray-600" style="background-color: #ff4000;"
           >
             Logout
           </button>
