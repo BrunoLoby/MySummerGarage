@@ -1,7 +1,4 @@
-#!/usr/bin/env bash
-# Popula o banco com dados fictícios.
-# Espera o Flyway criar as tabelas (app subindo) e então roda o seed.
-# Reexecutável: o seed-data.sql faz TRUNCATE antes de inserir.
+
 set -euo pipefail
 
 echo "Aguardando o Flyway criar as tabelas..."

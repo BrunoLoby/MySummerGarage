@@ -1,5 +1,6 @@
 package web.MySummerGarage.dto;
 
+//IMPORTS
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
@@ -40,24 +41,84 @@ public class AnuncioCarroDTOInput {
     @NotBlank(message = "A data de publicação é obrigatória")
     private String dataPublicacao;
 
-    public Long getCodigo() { return codigo; }
-    public void setCodigo(Long codigo) { this.codigo = codigo; }
-    public String getTitulo() { return titulo; }
-    public void setTitulo(String titulo) { this.titulo = titulo; }
-    public String getMarca() { return marca; }
-    public void setMarca(String marca) { this.marca = marca; }
-    public String getModelo() { return modelo; }
-    public void setModelo(String modelo) { this.modelo = modelo; }
-    public Integer getAno() { return ano; }
-    public void setAno(Integer ano) { this.ano = ano; }
-    public BigDecimal getValor() { return valor; }
-    public void setValor(BigDecimal valor) { this.valor = valor; }
-    public String getCor() { return cor; }
-    public void setCor(String cor) { this.cor = cor; }
-    public Integer getQuilometragem() { return quilometragem; }
-    public void setQuilometragem(Integer quilometragem) { this.quilometragem = quilometragem; }
-    public String getDescricao() { return descricao; }
-    public void setDescricao(String descricao) { this.descricao = descricao; }
-    public String getDataPublicacao() { return dataPublicacao; }
-    public void setDataPublicacao(String dataPublicacao) { this.dataPublicacao = dataPublicacao; }
+    // GETTERS E SETTERS
+    public Long getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Long codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public Integer getAno() {
+        return ano;
+    }
+
+    public void setAno(Integer ano) {
+        this.ano = ano;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public String getCor() {
+        return cor;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+
+    public Integer getQuilometragem() {
+        return quilometragem;
+    }
+
+    public void setQuilometragem(Integer quilometragem) {
+        this.quilometragem = quilometragem;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getDataPublicacao() {
+        return dataPublicacao;
+    }
+
+    public void setDataPublicacao(String dataPublicacao) {
+        this.dataPublicacao = dataPublicacao;
+    }
 }

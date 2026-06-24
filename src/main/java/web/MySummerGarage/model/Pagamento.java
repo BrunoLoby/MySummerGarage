@@ -1,5 +1,7 @@
 package web.MySummerGarage.model;
 
+
+//IMPORTS
 import java.io.Serializable;
 import java.math.BigDecimal;
 import jakarta.persistence.Entity;
