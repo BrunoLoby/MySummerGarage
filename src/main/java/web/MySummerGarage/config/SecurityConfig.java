@@ -24,6 +24,9 @@ public class SecurityConfig {
                                  "/webjars/**", "/favicon.ico").permitAll()
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/actuator/health").permitAll()
+                // Home pública (vitrine de carros) e detalhes do anúncio acessíveis sem login
+                .requestMatchers("/").permitAll()
+                .requestMatchers("/anuncio/visualizar/**").permitAll()
                 // Apenas ADMIN acessa usuários e relatórios
                 .requestMatchers("/usuario/**").hasRole("ADMIN")
                 .requestMatchers("/relatorios/**").hasRole("ADMIN")

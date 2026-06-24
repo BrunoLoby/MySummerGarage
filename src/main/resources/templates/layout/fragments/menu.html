@@ -4,8 +4,8 @@
 
 <div data-th-fragment="menu" class="space-y-4">
 
-  <!-- Anúncios -->
-  <div x-data="{ open: false }">
+  <!-- Anúncios (apenas para usuários logados) -->
+  <div x-data="{ open: false }" sec:authorize="isAuthenticated()">
     <button @click="open = !open"
       class="flex w-48 cursor-pointer items-center justify-between py-3 text-gray-400 hover:text-white focus:outline-none">
       <span class="flex items-center">

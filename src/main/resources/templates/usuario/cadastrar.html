@@ -9,7 +9,7 @@
 
 <body>
   <!-- conteudo principal -->
-  <main layout:fragment="conteudo" th:fragment="formulario" id="main" class="flex flex-col align-middle w-full m-10">
+  <main layout:fragment="conteudo" th:fragment="conteudo" id="main" class="flex flex-col align-middle w-full m-10">
 
         <form th:hx-post="@{/usuario/cadastrar}" th:object="${usuarioDTOInput}" class="w-1/2 mt-10 ms-16">
 
@@ -39,19 +39,13 @@
           </div>        
 
           <div class="flex justify-between">
-            <div class="w-1/2 me-5">
-              <div th:replace="~{components/forms :: inputData(
-                textoLabel='Data de Nascimento', 
-                nomeAtributo='dataNascimento',
-                isValidado=true)}"></div>            
-            </div>
             <div class="w-1/2">
               <div th:replace="~{components/forms :: checkboxMultiplo(
-                textoLabelGroup='Papéis', 
+                textoLabelGroup='Papéis',
                 nomeAtributo='papeis',
-                listaOpcoes=${todosPapeis}, 
+                listaOpcoes=${todosPapeis},
                 propLabel='nome',
-                propValue='codigo', 
+                propValue='codigo',
                 isValidado=true)}"></div>
             </div>
           </div>

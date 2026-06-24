@@ -2,6 +2,7 @@
 <html lang="pt-BR"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/layoutpadrao}">
 
 <head>
@@ -12,23 +13,73 @@
 
 <body>
  <main layout:fragment="conteudo" th:fragment="conteudo" id="main"
-      class="flex flex-col items-center w-full mt-20">
+      class="flex flex-col w-full p-6 md:p-10"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <h1 class="text-3xl md:text-5xl font-bold text-gray-700 text-center">
-      Bem-vindo ao MySummerGarage
-    </h1>
-    <p class="text-gray-400 mt-4 text-center text-lg">
-      Compre e venda carros com facilidade.
-    </p>
+    <!-- Cabeçalho da vitrine -->
+    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8">
+      <div>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-700">Carros anunciados</h1>
+        <p class="text-gray-400 mt-1 text-lg">Compre e venda carros com facilidade.</p>
+      </div>
 
-    <div class="flex gap-4 mt-10">
-      <a th:hx-get="@{/anuncio/pesquisar}" hx-target="#main" hx-swap="outerHTML" hx-push-url="true"
-         class="cursor-pointer py-3 px-6 text-sm font-medium rounded-lg bg-blue-100 text-blue-800 hover:bg-blue-200">
-        Ver Anúncios
-      </a>
-      <a th:hx-get="@{/anuncio/cadastrar}" hx-target="#main" hx-swap="outerHTML" hx-push-url="true"
-         class="cursor-pointer py-3 px-6 text-sm font-medium rounded-lg bg-green-100 text-green-800 hover:bg-green-200">
-        Novo Anúncio
+      <div class="flex gap-3">
+        <!-- Botão de login (somente para quem não está logado) -->
+        <a sec:authorize="!isAuthenticated()" href="/login"
+           class="py-3 px-6 text-sm font-medium rounded-lg bg-gray-700 text-white hover:bg-gray-800">
+          Entrar
+        </a>
+
+        <!-- Anunciar carro: logado vai ao cadastro; deslogado vai ao login -->
+        <a sec:authorize="isAuthenticated()" th:hx-get="@{/anuncio/cadastrar}"
+           hx-target="#main" hx-swap="outerHTML" hx-push-url="true"
+           class="cursor-pointer py-3 px-6 text-sm font-medium rounded-lg bg-green-100 text-green-800 hover:bg-green-200">
+          + Anunciar carro
+        </a>
+        <a sec:authorize="!isAuthenticated()" href="/login"
+           class="py-3 px-6 text-sm font-medium rounded-lg bg-green-100 text-green-800 hover:bg-green-200">
+          + Anunciar carro
+        </a>
+      </div>
+    </div>
+
+    <!-- Estado vazio -->
+    <div th:if="${#lists.isEmpty(anuncios)}" class="text-center text-gray-400 py-20">
+      Nenhum carro anunciado no momento.
+    </div>
+
+    <!-- Grade de cards (somente leitura) -->
+    <div th:unless="${#lists.isEmpty(anuncios)}"
+         class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <a th:each="a : ${anuncios}"
+         th:hx-get="@{/anuncio/visualizar/{c}(c=${a.codigo})}"
+         hx-target="#main" hx-swap="outerHTML" hx-push-url="true"
+         class="flex flex-col overflow-hidden bg-white border border-gray-200 rounded-xl shadow-sm cursor-pointer transition hover:shadow-md hover:border-gray-300">
+
+        <!-- Imagem (placeholder com ícone de carro) -->
+        <div class="flex items-center justify-center h-40 bg-gray-100 text-gray-300">
+          <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.05.496v1.296c0 .74-.588 1.296-1.275 1.296H1.275C.588 11.5 0 10.944 0 10.2V8.904q0-.254.05-.496l.335-1.68c.11-.546.465-1.01.964-1.261a.8.8 0 0 0 .381-.404zM3.5 6h9l-.931-2.17A1.5 1.5 0 0 0 10.182 3H5.82a1.5 1.5 0 0 0-1.387.83zM12 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0M6 9H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2"/>
+          </svg>
+        </div>
+
+        <div class="flex flex-col flex-1 p-5">
+          <h3 class="text-lg font-semibold text-gray-800" th:text="${a.titulo}">Título</h3>
+          <p class="mt-1 text-sm text-gray-500">
+            <span th:text="${a.marca}">Marca</span> ·
+            <span th:text="${a.modelo}">Modelo</span> ·
+            <span th:text="${a.ano}">Ano</span>
+          </p>
+
+          <div class="flex items-center gap-3 mt-3 text-xs text-gray-500">
+            <span th:if="${a.cor != null and !a.cor.isBlank()}" th:text="${a.cor}">Cor</span>
+            <span th:if="${a.quilometragem != null}"
+                  th:text="${#numbers.formatInteger(a.quilometragem, 1, 'POINT')} + ' km'">0 km</span>
+          </div>
+
+          <p class="mt-4 text-2xl font-bold text-gray-800"
+             th:text="'R$ ' + ${#numbers.formatDecimal(a.valor, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</p>
+        </div>
       </a>
     </div>
 
