@@ -58,10 +58,16 @@ public class UsuarioController {
             @RequestParam(defaultValue = "asc") String dir,
             Model model, HttpServletRequest request) {
 
-        Sort.Direction direcao = dir.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(direcao, sort));
+        // O componente de paginação envia o sort no formato "campo,direcao" (ex: nome,desc).
+        // Separamos o campo da direção para montar o Sort corretamente.
+        String[] partesSort = sort.split(",");
+        String campo = partesSort[0];
+        Sort.Direction direcao = (partesSort.length > 1)
+                ? Sort.Direction.fromString(partesSort[1])
+                : (dir.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC);
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(direcao, campo));
         Page<Usuario> resultado = usuarioService.listarTodos(pageable);
-        String urlBase = "/usuario/pesquisar?sort=" + sort + "&dir=" + dir;
+        String urlBase = "/usuario/pesquisar?sort=" + campo + "&dir=" + direcao.name().toLowerCase();
         model.addAttribute("pagina", new PaginaInfo(resultado, urlBase));
         model.addAttribute("usuarios", resultado.getContent());
         if (isHtmx(request)) return "usuario/pesquisar :: conteudo";
