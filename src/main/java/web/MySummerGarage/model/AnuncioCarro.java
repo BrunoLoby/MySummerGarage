@@ -50,30 +50,101 @@ public class AnuncioCarro implements Serializable {
     @JoinColumn(name = "codigo_vendedor")
     private Usuario vendedor;
 
-    public Long getCodigo() { return codigo; }
-    public void setCodigo(Long codigo) { this.codigo = codigo; }
-    public String getTitulo() { return titulo; }
-    public void setTitulo(String titulo) { this.titulo = titulo; }
-    public String getMarca() { return marca; }
-    public void setMarca(String marca) { this.marca = marca; }
-    public String getModelo() { return modelo; }
-    public void setModelo(String modelo) { this.modelo = modelo; }
-    public Integer getAno() { return ano; }
-    public void setAno(Integer ano) { this.ano = ano; }
-    public BigDecimal getValor() { return valor; }
-    public void setValor(BigDecimal valor) { this.valor = valor; }
-    public String getCor() { return cor; }
-    public void setCor(String cor) { this.cor = cor; }
-    public Integer getQuilometragem() { return quilometragem; }
-    public void setQuilometragem(Integer quilometragem) { this.quilometragem = quilometragem; }
-    public String getDescricao() { return descricao; }
-    public void setDescricao(String descricao) { this.descricao = descricao; }
-    public LocalDate getDataPublicacao() { return dataPublicacao; }
-    public void setDataPublicacao(LocalDate dataPublicacao) { this.dataPublicacao = dataPublicacao; }
-    public StatusAnuncio getStatus() { return status; }
-    public void setStatus(StatusAnuncio status) { this.status = status; }
-    public Usuario getVendedor() { return vendedor; }
-    public void setVendedor(Usuario vendedor) { this.vendedor = vendedor; }
+    public Long getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Long codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public Integer getAno() {
+        return ano;
+    }
+
+    public void setAno(Integer ano) {
+        this.ano = ano;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public String getCor() {
+        return cor;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+
+    public Integer getQuilometragem() {
+        return quilometragem;
+    }
+
+    public void setQuilometragem(Integer quilometragem) {
+        this.quilometragem = quilometragem;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public LocalDate getDataPublicacao() {
+        return dataPublicacao;
+    }
+
+    public void setDataPublicacao(LocalDate dataPublicacao) {
+        this.dataPublicacao = dataPublicacao;
+    }
+
+    public StatusAnuncio getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusAnuncio status) {
+        this.status = status;
+    }
+
+    public Usuario getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(Usuario vendedor) {
+        this.vendedor = vendedor;
+    }
 
     @Override
     public int hashCode() {
@@ -85,13 +156,18 @@ public class AnuncioCarro implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
         AnuncioCarro other = (AnuncioCarro) obj;
         if (codigo == null) {
-            if (other.codigo != null) return false;
-        } else if (!codigo.equals(other.codigo)) return false;
+            if (other.codigo != null)
+                return false;
+        } else if (!codigo.equals(other.codigo))
+            return false;
         return true;
     }
 

@@ -7,5 +7,4 @@ CREATE TABLE perfil (
 );
 
 INSERT INTO perfil (codigo, nome) VALUES (nextval('perfil_codigo_seq'), 'ADMIN');
-INSERT INTO perfil (codigo, nome) VALUES (nextval('perfil_codigo_seq'), 'COMPRADOR');
-INSERT INTO perfil (codigo, nome) VALUES (nextval('perfil_codigo_seq'), 'VENDEDOR');
+INSERT INTO perfil (codigo, nome) VALUES (nextval('perfil_codigo_seq'), 'USER');

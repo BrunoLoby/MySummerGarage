@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR" layout:decorate="~{layout/layoutpadrao}" xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+  <title>Acesso Negado</title>
+</head>
+
+<body>
+  <!-- conteudo principal -->
+  <main layout:fragment="conteudo" th:fragment="conteudo" id="main"
+    class="flex flex-col align-middle justify-center w-full m-10">
+    <h1 class="text-center mt-5 text-3xl font-semibold text-gray-700">403 — Acesso Negado</h1>
+    <p class="text-center mt-3 text-lg text-gray-600">
+      Você não tem permissão para acessar ou gerenciar este recurso.
+    </p>
+    <p class="text-center mt-5">
+      <a th:href="@{/anuncio/pesquisar}" class="text-blue-600 hover:text-blue-900">Voltar para meus anúncios</a>
+    </p>
+  </main>
+  <!-- !conteudo principal -->
+</body>
+
+</html>
