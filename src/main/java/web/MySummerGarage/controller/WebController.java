@@ -31,4 +31,9 @@ public class WebController {
     public String login() {
         return "login";
     }
+
+    @GetMapping("/403")
+    public String acessoNegado() {
+        return "403";
+    }
 }

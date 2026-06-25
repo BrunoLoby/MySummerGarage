@@ -19,4 +19,16 @@ public interface AnuncioCarroRepository extends JpaRepository<AnuncioCarro, Long
             @Param("marca") String marca,
             @Param("status") StatusAnuncio status,
             Pageable pageable);
+
+    @Query("SELECT a FROM AnuncioCarro a WHERE " +
+           "a.vendedor.nomeUsuario = :nomeUsuario AND " +
+           "LOWER(a.titulo) LIKE LOWER(CONCAT('%', :titulo, '%')) AND " +
+           "LOWER(a.marca) LIKE LOWER(CONCAT('%', :marca, '%')) AND " +
+           "(:status IS NULL OR a.status = :status)")
+    Page<AnuncioCarro> pesquisarPorVendedor(
+            @Param("nomeUsuario") String nomeUsuario,
+            @Param("titulo") String titulo,
+            @Param("marca") String marca,
+            @Param("status") StatusAnuncio status,
+            Pageable pageable);
 }

@@ -109,6 +109,7 @@ public class AnuncioCarroController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "titulo") String sort,
             @RequestParam(defaultValue = "asc") String dir,
+            Authentication auth,
             Model model, HttpServletRequest request) {
 
         // O componente de paginação envia o sort no formato "campo,direcao" (ex: titulo,desc).
@@ -119,7 +120,8 @@ public class AnuncioCarroController {
                 ? Sort.Direction.fromString(partesSort[1])
                 : (dir.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC);
         Pageable pageable = PageRequest.of(page, 10, Sort.by(direcao, campo));
-        Page<AnuncioCarro> resultado = anuncioCarroService.pesquisar(filtro, pageable);
+        // ADMIN gerencia todos os anúncios; demais usuários, apenas os próprios.
+        Page<AnuncioCarro> resultado = anuncioCarroService.pesquisarParaGerenciamento(filtro, pageable, auth);
 
         String urlBase = "/anuncio/pesquisar?titulo=" + nvl(filtro.getTitulo()) +
                          "&marca=" + nvl(filtro.getMarca()) +
@@ -136,9 +138,9 @@ public class AnuncioCarroController {
 
     // ALTERAR
     @GetMapping("/alterar/{codigo}")
-    public String abrirAlterar(@PathVariable Long codigo, Model model, HttpServletRequest request) {
-        AnuncioCarro anuncio = anuncioCarroService.buscarPorCodigo(codigo)
-                .orElseThrow(() -> new RuntimeException("Anúncio não encontrado"));
+    public String abrirAlterar(@PathVariable Long codigo, Authentication auth,
+                               Model model, HttpServletRequest request) {
+        AnuncioCarro anuncio = anuncioCarroService.buscarParaGerenciar(codigo, auth);
         model.addAttribute("anuncioDTOInput", anuncioCarroService.toDTO(anuncio));
         model.addAttribute("todosStatus", StatusAnuncio.values());
         if (isHtmx(request)) return "anuncio/alterar :: conteudo";
@@ -149,6 +151,7 @@ public class AnuncioCarroController {
     public String alterar(@PathVariable Long codigo,
                           @Valid @ModelAttribute("anuncioDTOInput") AnuncioCarroDTOInput dto,
                           BindingResult result, Model model,
+                          Authentication auth,
                           HttpServletRequest request,
                           RedirectAttributes redirect) {
         if (result.hasErrors()) {
@@ -156,7 +159,7 @@ public class AnuncioCarroController {
             if (isHtmx(request)) return "anuncio/alterar :: conteudo";
             return "anuncio/alterar";
         }
-        anuncioCarroService.atualizar(codigo, dto);
+        anuncioCarroService.atualizar(codigo, dto, auth);
         redirect.addFlashAttribute("mensagemSucesso", "Anúncio atualizado com sucesso!");
         return "redirect:/anuncio/pesquisar";
     }
@@ -173,8 +176,8 @@ public class AnuncioCarroController {
 
     // EXCLUIR
     @PostMapping("/excluir/{codigo}")
-    public String excluir(@PathVariable Long codigo, RedirectAttributes redirect) {
-        anuncioCarroService.excluir(codigo);
+    public String excluir(@PathVariable Long codigo, Authentication auth, RedirectAttributes redirect) {
+        anuncioCarroService.excluir(codigo, auth);
         redirect.addFlashAttribute("mensagemSucesso", "Anúncio excluído com sucesso!");
         return "redirect:/anuncio/pesquisar";
     }
