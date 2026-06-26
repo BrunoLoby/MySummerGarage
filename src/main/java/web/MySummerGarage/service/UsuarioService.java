@@ -18,14 +18,17 @@ import java.util.Optional;
 @Service
 public class UsuarioService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private PerfilRepository perfilRepository;
+    private final PerfilRepository perfilRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+
+    UsuarioService(UsuarioRepository usuarioRepository, PerfilRepository perfilRepository, PasswordEncoder passwordEncoder) {
+        this.usuarioRepository = usuarioRepository;
+        this.perfilRepository = perfilRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public Page<Usuario> listarTodos(Pageable pageable) {
         return usuarioRepository.findAll(pageable);

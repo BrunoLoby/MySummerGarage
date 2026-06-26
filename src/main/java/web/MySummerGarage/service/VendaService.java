@@ -26,17 +26,20 @@ import java.util.Optional;
 @Service
 public class VendaService {
 
-    @Autowired
-    private VendaRepository vendaRepository;
+    private final VendaRepository vendaRepository;
 
-    @Autowired
-    private PagamentoRepository pagamentoRepository;
+    private final PagamentoRepository pagamentoRepository;
 
-    @Autowired
-    private AnuncioCarroRepository anuncioCarroRepository;
+    private final AnuncioCarroRepository anuncioCarroRepository;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+
+    VendaService(UsuarioRepository usuarioRepository, VendaRepository vendaRepository, PagamentoRepository pagamentoRepository, AnuncioCarroRepository anuncioCarroRepository) {
+        this.usuarioRepository = usuarioRepository;
+        this.vendaRepository = vendaRepository;
+        this.pagamentoRepository = pagamentoRepository;
+        this.anuncioCarroRepository = anuncioCarroRepository;
+    }
 
     public Page<Venda> listarTodas(Pageable pageable) {
         return vendaRepository.findAll(pageable);

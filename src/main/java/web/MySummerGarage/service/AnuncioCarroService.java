@@ -23,13 +23,16 @@ import java.util.Optional;
 @Service
 public class AnuncioCarroService {
 
-    @Autowired
-    private AnuncioCarroRepository anuncioCarroRepository;
+    private final AnuncioCarroRepository anuncioCarroRepository;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
     private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    AnuncioCarroService(AnuncioCarroRepository anuncioCarroRepository, UsuarioRepository usuarioRepository) {
+        this.anuncioCarroRepository = anuncioCarroRepository;
+        this.usuarioRepository = usuarioRepository;
+    }
 
     public Page<AnuncioCarro> pesquisar(AnuncioCarroFilter filtro, Pageable pageable) {
         String titulo = (filtro.getTitulo() != null && !filtro.getTitulo().isBlank()) ? filtro.getTitulo() : "";
