@@ -24,8 +24,11 @@ import web.MySummerGarage.util.PaginaInfo;
 @RequestMapping("/anuncio")
 public class AnuncioCarroController {
 
-    @Autowired
-    private AnuncioCarroService anuncioCarroService;
+    private final AnuncioCarroService anuncioCarroService;
+
+    AnuncioCarroController(AnuncioCarroService anuncioCarroService) {
+        this.anuncioCarroService = anuncioCarroService;
+    }
 
     private boolean isHtmx(HttpServletRequest request) {
         return "true".equals(request.getHeader("HX-Request"));

@@ -14,8 +14,11 @@ import web.MySummerGarage.service.AnuncioCarroService;
 @Controller
 public class WebController {
 
-    @Autowired
-    private AnuncioCarroService anuncioCarroService;
+    private final AnuncioCarroService anuncioCarroService;
+
+    WebController(AnuncioCarroService anuncioCarroService) {
+        this.anuncioCarroService = anuncioCarroService;
+    }
 
     @GetMapping("/")
     public String index(Model model) {

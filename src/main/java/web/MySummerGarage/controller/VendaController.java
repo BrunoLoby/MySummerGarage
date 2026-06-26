@@ -24,11 +24,14 @@ import web.MySummerGarage.util.PaginaInfo;
 @RequestMapping("/venda")
 public class VendaController {
 
-    @Autowired
-    private VendaService vendaService;
+    private final VendaService vendaService;
 
-    @Autowired
-    private AnuncioCarroService anuncioCarroService;
+    private final AnuncioCarroService anuncioCarroService;
+
+    VendaController(VendaService vendaService, AnuncioCarroService anuncioCarroService) {
+        this.vendaService = vendaService;
+        this.anuncioCarroService = anuncioCarroService;
+    }
 
     private boolean isHtmx(HttpServletRequest request) {
         return "true".equals(request.getHeader("HX-Request"));

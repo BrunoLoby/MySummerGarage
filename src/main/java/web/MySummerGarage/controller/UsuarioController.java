@@ -21,8 +21,11 @@ import web.MySummerGarage.util.PaginaInfo;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-    @Autowired
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
+
+    UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
     private boolean isHtmx(HttpServletRequest request) {
         return "true".equals(request.getHeader("HX-Request"));
