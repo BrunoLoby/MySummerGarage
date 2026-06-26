@@ -25,7 +25,7 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-12345}
     ports:
-      - "8080:8080"
+      - "8443:8443"
 
 volumes:
   db_data:

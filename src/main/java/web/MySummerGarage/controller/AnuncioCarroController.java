@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import web.MySummerGarage.dto.AnuncioCarroDTOInput;
@@ -20,9 +19,6 @@ import web.MySummerGarage.model.AnuncioCarro;
 import web.MySummerGarage.model.StatusAnuncio;
 import web.MySummerGarage.service.AnuncioCarroService;
 import web.MySummerGarage.util.PaginaInfo;
-
-import java.beans.PropertyEditorSupport;
-import java.math.BigDecimal;
 
 @Controller
 @RequestMapping("/anuncio")
@@ -33,48 +29,6 @@ public class AnuncioCarroController {
 
     private boolean isHtmx(HttpServletRequest request) {
         return "true".equals(request.getHeader("HX-Request"));
-    }
-
-
-    @InitBinder
-    public void configurarConversores(WebDataBinder binder) {
-        // BigDecimal: remove separador de milhar (.) e troca a vírgula decimal por ponto
-        binder.registerCustomEditor(BigDecimal.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) {
-                if (text == null || text.isBlank()) {
-                    setValue(null);
-                    return;
-                }
-                String limpo = text.trim().replace(".", "").replace(",", ".");
-                setValue(new BigDecimal(limpo));
-            }
-
-            @Override
-            public String getAsText() {
-                Object valor = getValue();
-                return valor == null ? "" : valor.toString();
-            }
-        });
-
-        // Integer: mantém apenas os dígitos (remove o separador de milhar)
-        binder.registerCustomEditor(Integer.class, new PropertyEditorSupport() {
-            @Override
-            public void setAsText(String text) {
-                if (text == null) {
-                    setValue(null);
-                    return;
-                }
-                String somenteDigitos = text.replaceAll("\\D", "");
-                setValue(somenteDigitos.isEmpty() ? null : Integer.valueOf(somenteDigitos));
-            }
-
-            @Override
-            public String getAsText() {
-                Object valor = getValue();
-                return valor == null ? "" : valor.toString();
-            }
-        });
     }
 
     // CADASTRAR
