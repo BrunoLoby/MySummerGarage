@@ -27,9 +27,10 @@ public class SecurityConfig {
                 // Home pública (vitrine de carros) e detalhes do anúncio acessíveis sem login
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/anuncio/visualizar/**").permitAll()
-                // Apenas ADMIN acessa usuários e relatórios
+                // Apenas ADMIN acessa usuários, relatórios e a listagem de todas as vendas
                 .requestMatchers("/usuario/**").hasRole("ADMIN")
                 .requestMatchers("/relatorios/**").hasRole("ADMIN")
+                .requestMatchers("/venda/pesquisar").hasRole("ADMIN")
                 // Qualquer outra requisição exige autenticação
                 .anyRequest().authenticated()
             )
